@@ -1,0 +1,32 @@
+volumes:
+  postgresql-data:
+  artifact-store:
+
+services:
+  mlflow-db:
+    container_name: mlflow-backend-store
+    image: postgres:16.0
+    env_file:
+      - .envs/.postgres
+
+  mlflow-server:
+    image: mlflow-tracking-server
+    container_name: mlflow-tracking-server
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        MLFLOW_ARTIFACT_STORE: ${MLFLOW_ARTIFACT_STORE}
+    ports:
+      - ${LOCAL_DEV_MLFLOW_SERVER_PORT}:${LOCAL_DEV_MLFLOW_SERVER_PORT}
+    depends_on:
+      - mlflow-db
+    env_file:
+      - .envs/.postgres
+      - .envs/.mlflow-common
+      - .envs/.mlflow-dev
+    volumes:
+      - ./:/app
+      - artifact-store:${MLFLOW_ARTIFACT_STORE}
+    ipc: host
+    init: true
