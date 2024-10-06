@@ -2,7 +2,7 @@
 name = "mlflow-tracking-server"
 version = "0.1.0"
 description = "Mlflow tracking server"
-authors = ["rama17aneesh <aneeshtumuluri@gmail.com>"]
+authors = ["rama17aneesh <aneesh@gmail.com>"]
 repository="https://github.com/rama17aneesh/mlflow-tracking-server.git"
 readme = "README.md"
 
